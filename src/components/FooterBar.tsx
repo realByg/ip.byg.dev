@@ -10,7 +10,13 @@ export default function FooterBar() {
 
     return (
         <div style={{textAlign: 'center'}}>
-            Made w/
+            <a href="https://github.com/zayabighead/react-ip-lookup"
+               target="_blank"
+               rel="noreferrer"
+            >
+                react-ip-lookup
+            </a>
+            <span> is made with</span>
             <img src="https://reactjs.org/favicon.ico"
                  style={iconStyle}
                  alt=""
