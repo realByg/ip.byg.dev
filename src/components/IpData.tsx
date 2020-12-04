@@ -23,13 +23,13 @@ export default function IpData() {
                             icon={<CopyOutlined/>}
                             onClick={() => {
                                 copy(ipData.ip)
-                                message.success('已复制到剪切板')
+                                message.success('Copied to Clipboard')
                             }}
                     />
                 </div>
             </Descriptions.Item>
 
-            <Descriptions.Item label="运营商">
+            <Descriptions.Item label="ISP">
                 <div className="horizontal-center justify-between">
                     {ipData.isp}
                     <Button type="dashed"
@@ -50,11 +50,11 @@ export default function IpData() {
                 >{ipData.asn}</a>
             </Descriptions.Item>
 
-            <Descriptions.Item label="ASN 组织">
+            <Descriptions.Item label="ASN Org">
                 {ipData.asn_organization}
             </Descriptions.Item>
 
-            <Descriptions.Item label="地区">
+            <Descriptions.Item label="Location">
                 <div className="horizontal-center justify-between">
                     <div>
                         <img src={!!ipData.country_code ?

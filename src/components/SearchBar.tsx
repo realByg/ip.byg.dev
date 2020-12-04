@@ -10,7 +10,7 @@ export default function SearchBar() {
 
     return (
         <Input.Search
-            placeholder="搜索 IP"
+            placeholder="Search IP"
             enterButton
             loading={loading}
             style={{width: 'auto'}}
