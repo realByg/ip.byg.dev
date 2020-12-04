@@ -12,6 +12,7 @@ export default function SearchBar() {
         <Input.Search
             placeholder="Search IP"
             enterButton
+            allowClear
             loading={loading}
             style={{width: 'auto'}}
             onSearch={(value: string) => {
