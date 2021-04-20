@@ -31,7 +31,7 @@ export default function IpData() {
 
             <Descriptions.Item label="ISP">
                 <div className="horizontal-center justify-between">
-                    {ipData.isp}
+                    <span>{ipData.isp}</span>
                     <Button type="dashed"
                             shape="circle"
                             icon={<SearchOutlined/>}

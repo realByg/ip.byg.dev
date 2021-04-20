@@ -2,7 +2,8 @@ import React, {useEffect, useState, createContext} from 'react'
 import {message} from 'antd'
 
 
-export const IpContext = createContext((ip: string) => {})
+export const IpContext = createContext((ip: string) => {
+})
 const ipDataInitialState = {
     organization: '',
     longitude: 0,
@@ -30,20 +31,20 @@ export function IpDataProvider({children}: any) {
         setLoading(true)
         fetch(
             'https://api.ip.sb/geoip/' + ip
-        )
-            .then(r => {
-                r.json()
-                    .then(data =>
-                        setIpData(data)
-                    )
-                setLoading(false)
+        ).then(r => {
+            r.json().then(data => {
+                setIpData(data)
+                if (Object.keys(data).length < 2)
+                    message.error('NO INFO')
             })
-            .catch(e => {
-                message.error(e.message)
-                setLoading(false)
-            })
-    }, [ip])
 
+        }).catch(e => {
+            message.error(e.message)
+
+        }).finally(() => {
+            setLoading(false)
+        })
+    }, [ip])
 
     return (
         <IpContext.Provider value={setIp}>
