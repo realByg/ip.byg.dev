@@ -10,7 +10,7 @@ export default function FooterBar() {
     return (
         <div style={{textAlign: 'center'}}>
             <a
-                href="https://github.com/zayabighead/react-ip-lookup"
+                href="https://github.com/zayabighead/ip-lookup"
                 target="_blank"
                 rel="noreferrer"
             >
