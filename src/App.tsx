@@ -3,17 +3,17 @@ import Navbar from './components/Navbar'
 import Content from './components/Content'
 import FooterBar from './components/FooterBar'
 import {Layout} from 'antd'
-import 'antd/dist/antd.css'
-import './style.css'
 import {IpDataProvider} from './providers/ip-data-provider'
-
 
 export default function App() {
     return (
         <Layout>
             <IpDataProvider>
                 <div style={{height: '90vh'}}>
-                    <Layout.Header style={{padding: 0}} className="background-white">
+                    <Layout.Header
+                        style={{padding: 0}}
+                        className="background-white"
+                    >
                         <Navbar/>
                     </Layout.Header>
 
