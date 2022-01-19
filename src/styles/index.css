@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('../assets/font/Montserrat-Bold.ttf');
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('../assets/font/Montserrat-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'NotoSansSC';
+	src: url('../assets/font/NotoSansSC-Thin.otf');
+}
+
+@font-face {
+	font-family: 'NotoSansSC';
+	src: url('../assets/font/NotoSansSC-Medium.otf');
+	font-weight: bold;
+}
+
+body {
+	font-family: 'Montserrat', 'NotoSansSC', serif;
+	@apply bg-slate-300 text-slate-800 w-screen h-screen overflow-hidden text-base select-none;
+	@apply dark:bg-zinc-800 dark:text-slate-200 delay-75 transition-all scroll-smooth;
+}
