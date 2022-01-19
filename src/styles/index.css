@@ -26,6 +26,6 @@
 
 body {
 	font-family: 'Montserrat', 'NotoSansSC', serif;
-	@apply bg-slate-300 text-slate-800 w-screen h-screen overflow-hidden text-base select-none;
+	@apply bg-slate-300 text-slate-800 w-full h-screen overflow-hidden text-base;
 	@apply dark:bg-zinc-800 dark:text-slate-200 delay-75 transition-all scroll-smooth;
 }

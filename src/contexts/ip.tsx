@@ -1,14 +1,14 @@
 import { createContext, useState, useContext } from 'react'
 
 const IPContext = createContext({
-	ip: '',
-	setIP: (ip: string) => {},
+	searchIP: '',
+	setSearchIP: (ip: string) => {},
 })
 
 export const useIPContext = () => useContext(IPContext)
 
 export const IPContextProvider = ({ children }: { children: JSX.Element }) => {
-	const [ip, setIP] = useState('')
+	const [searchIP, setSearchIP] = useState('')
 
-	return <IPContext.Provider value={{ ip, setIP }}>{children}</IPContext.Provider>
+	return <IPContext.Provider value={{ searchIP, setSearchIP }}>{children}</IPContext.Provider>
 }

@@ -4,22 +4,23 @@ import { useThemeContext } from './contexts/theme'
 import SearchBar from './components/SearchBar'
 import { Fragment } from 'react'
 import { useIPContext } from './contexts/ip'
-import IPInfo from './components/IPInfo'
+import IPSections from './components/IPSections'
 
 const App = () => {
 	const { themeDark, setThemeDark } = useThemeContext()
-	const { ip, setIP } = useIPContext()
+	const { searchIP, setSearchIP } = useIPContext()
 
 	return (
 		<Fragment>
 			<div className='w-full h-16 dark:bg-zinc-900/80 bg-slate-200/80 shadow-sm sticky top-0 left-0 z-10 backdrop-blur-sm'>
 				<div className='mx-auto max-w-4xl px-4 h-full flex items-center'>
-					<div className='flex items-center'>
-						<IPIcon className='h-7 w-7 block fill-green-600' />
-						<div className='md:text-lg  md:font-bold text-green-600'>.BYG.DEV</div>
+					<div className='flex items-center text-green-600 select-none'>
+						<IPIcon className='block text-3xl' />
+						<div className='md:text-lg font-bold'>.BYG.DEV</div>
 					</div>
-					<div className='flex-1' />
-					<SearchBar placeholder={ip} onSearch={setIP} />
+					<div className='flex-1 mx-4 flex justify-end'>
+						<SearchBar placeholder={searchIP} onSearch={setSearchIP} />
+					</div>
 					<div
 						className='h-8 w-8 rounded-md cursor-pointer dark:bg-zinc-800 bg-slate-300 flex items-center justify-around'
 						onClick={() => setThemeDark(!themeDark)}>
@@ -34,7 +35,7 @@ const App = () => {
 
 			<div className='min-h-[80vh]'>
 				<div className='mx-auto max-w-4xl px-4'>
-					<IPInfo />
+					<IPSections />
 				</div>
 			</div>
 
