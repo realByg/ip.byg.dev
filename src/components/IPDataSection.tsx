@@ -26,7 +26,7 @@ const LoadingBar = () => (
 	<div className='animate-pulse w-2/3 h-full dark:bg-zinc-800 bg-zinc-400 rounded-md'></div>
 )
 
-const IPSections = () => {
+const IPDataSection = () => {
 	const { searchIP, setSearchIP } = useIPContext()
 	const [loading, setLoading] = useState(false)
 	const [ipData, setIPData] = useState<IPData>()
@@ -97,6 +97,7 @@ const IPSections = () => {
 			<div className='w-full grid grid-cols-3 gap-x-2 gap-y-4 capitalize md:text-base text-sm [word-break:break-all]'>
 				<div className='col-span-1 text-green-600 font-bold'>IPv4</div>
 				<div className='col-span-2 font-bold'>
+					{/* bruh */}
 					{ipv4 ? (
 						<div className='w-full flex items-center'>
 							<div className='flex-1'>{ipv4}</div>
@@ -122,6 +123,7 @@ const IPSections = () => {
 
 				<div className='col-span-1 text-green-600 font-bold'>IPv6</div>
 				<div className='col-span-2 font-bold'>
+					{/* bruh */}
 					{ipv6 ? (
 						<div className='w-full flex items-center'>
 							<div className='flex-1'>{ipv6}</div>
@@ -231,4 +233,4 @@ const IPSections = () => {
 		</div>
 	)
 }
-export default IPSections
+export default IPDataSection

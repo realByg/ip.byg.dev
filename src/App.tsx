@@ -4,7 +4,7 @@ import { useThemeContext } from './contexts/theme'
 import SearchBar from './components/SearchBar'
 import { Fragment } from 'react'
 import { useIPContext } from './contexts/ip'
-import IPSections from './components/IPSections'
+import IPDataSection from './components/IPDataSection'
 
 const App = () => {
 	const { themeDark, setThemeDark } = useThemeContext()
@@ -36,7 +36,7 @@ const App = () => {
 			</div>
 
 			<div className='mx-auto max-w-4xl px-4'>
-				<IPSections />
+				<IPDataSection />
 			</div>
 
 			<div className='w-full text-center text-xs text-gray-400 mt-4 md:mt-6'>
