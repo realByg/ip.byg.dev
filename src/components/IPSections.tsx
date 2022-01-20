@@ -1,7 +1,8 @@
 import { useIPContext } from '../contexts/ip'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { AiOutlineCopy, AiOutlineInfoCircle } from 'react-icons/ai'
 import { BiSearchAlt2, BiMapPin } from 'react-icons/bi'
+import copy from 'copy-to-clipboard'
 
 type IPData = {
 	organization?: string
@@ -13,7 +14,7 @@ type IPData = {
 	asn_organization?: string
 	ip: string
 	latitude?: number
-	continent_code: string
+	continent_code?: string
 	country_code?: string
 	region_code?: string
 	city?: string
@@ -32,38 +33,32 @@ const IPSections = () => {
 	const [ipv4, setIPv4] = useState('')
 	const [ipv6, setIPv6] = useState('')
 
-	const getClientIPData = () => {
+	const getClientIPData = async () => {
 		setLoading(true)
 		setIPData(undefined)
 		setIPv4('')
 		setIPv6('')
-		setSearchIP('')
 
-		fetch(`https://api-ipv4.ip.sb/geoip`)
-			.then((response) => response.json())
-			.then((data: IPData) => {
-				setIPData(data)
-				setIPv4(data.ip)
-				setSearchIP(data.ip)
-			})
-			.catch((e) => {
-				console.log(e)
-			})
-			.finally(() => {
-				setLoading(false)
-			})
+		let ipv4Data: IPData = { ip: '' }
+		try {
+			const ipv4Res = await fetch(`https://api-ipv4.ip.sb/geoip`)
+			ipv4Data = await ipv4Res.json()
+		} catch (e) {}
 
-		fetch(`https://api-ipv6.ip.sb/geoip`)
-			.then((response) => response.json())
-			.then((data: IPData) => {
-				setIPv6(data.ip)
-			})
-			.catch((e) => {
-				console.log(e)
-			})
+		let ipv6Data: IPData = { ip: '' }
+		try {
+			const ipv6Res = await fetch(`https://api-ipv6.ip.sb/geoip`)
+			ipv6Data = await ipv6Res.json()
+		} catch (e) {}
+
+		setIPData(ipv4Data || ipv6Data)
+		setIPv4(ipv4Data.ip)
+		setIPv6(ipv6Data.ip)
+		setSearchIP(ipv4Data.ip || ipv6Data.ip)
+		setLoading(false)
 	}
 
-	const getSearchIPData = () => {
+	const getSearchIPData = async () => {
 		setLoading(true)
 		setIPData(undefined)
 		setIPv4('-')
@@ -75,17 +70,14 @@ const IPSections = () => {
 			setIPv6(searchIP)
 		}
 
-		fetch(`https://api.ip.sb/geoip/${searchIP}`)
-			.then((response) => response.json())
-			.then((data: IPData) => {
-				setIPData(data)
-			})
-			.catch((e) => {
-				console.log(e)
-			})
-			.finally(() => {
-				setLoading(false)
-			})
+		let _ipData: IPData = { ip: searchIP }
+		try {
+			const apiRes = await fetch(`https://api.ip.sb/geoip/${searchIP}`)
+			_ipData = await apiRes.json()
+		} catch (e) {}
+
+		setIPData(_ipData)
+		setLoading(false)
 	}
 
 	useEffect(() => {
@@ -108,7 +100,18 @@ const IPSections = () => {
 					{ipv4 ? (
 						<div className='w-full flex items-center'>
 							<div className='flex-1'>{ipv4}</div>
-							<AiOutlineCopy className='text-lg ml-4' />
+							{ipv4 !== '-' && (
+								<Fragment>
+									<AiOutlineCopy
+										className='text-lg ml-4 cursor-pointer active:text-green-600'
+										onClick={() => copy(ipv4)}
+									/>
+									<AiOutlineInfoCircle
+										className='text-lg ml-4 cursor-pointer'
+										onClick={() => window.open(`https://ip.sb/whois/${ipv4}`)}
+									/>
+								</Fragment>
+							)}
 						</div>
 					) : loading ? (
 						<LoadingBar />
@@ -122,7 +125,18 @@ const IPSections = () => {
 					{ipv6 ? (
 						<div className='w-full flex items-center'>
 							<div className='flex-1'>{ipv6}</div>
-							<AiOutlineCopy className='text-lg ml-4' />
+							{ipv6 !== '-' && (
+								<Fragment>
+									<AiOutlineCopy
+										className='text-lg ml-4 cursor-pointer active:text-green-600'
+										onClick={() => copy(ipv6)}
+									/>
+									<AiOutlineInfoCircle
+										className='text-lg ml-4 cursor-pointer'
+										onClick={() => window.open(`https://ip.sb/whois/${ipv6}`)}
+									/>
+								</Fragment>
+							)}
 						</div>
 					) : loading ? (
 						<LoadingBar />
@@ -157,7 +171,14 @@ const IPSections = () => {
 					) : (
 						<div className='w-full flex items-center'>
 							<div className='flex-1'>{ipData?.asn_organization || '-'}</div>
-							<BiSearchAlt2 className='text-lg ml-4' />
+							{ipData?.asn_organization && (
+								<BiSearchAlt2
+									className='text-lg ml-4 cursor-pointer'
+									onClick={() =>
+										window.open(`https://google.com/search?q=${ipData?.asn_organization}`)
+									}
+								/>
+							)}
 						</div>
 					)}
 				</div>
@@ -174,7 +195,12 @@ const IPSections = () => {
 					) : (
 						<div className='w-full flex items-center'>
 							<div className='flex-1'>{ipData?.asn || '-'}</div>
-							<AiOutlineInfoCircle className='text-lg ml-4' />
+							{ipData?.asn && (
+								<AiOutlineInfoCircle
+									className='text-lg ml-4 cursor-pointer'
+									onClick={() => window.open(`https://ip.sb/whois/${ipData?.asn}`)}
+								/>
+							)}
 						</div>
 					)}
 				</div>
@@ -188,7 +214,16 @@ const IPSections = () => {
 							<div className='flex-1'>
 								{`${ipData?.latitude || '-'}, ${ipData?.longitude || '-'}`}
 							</div>
-							<BiMapPin className='text-lg ml-4' />
+							{ipData?.latitude && ipData?.longitude && (
+								<BiMapPin
+									className='text-lg ml-4 cursor-pointer'
+									onClick={() =>
+										window.open(
+											`https://www.google.com/maps/place/${ipData?.latitude},${ipData?.longitude}`
+										)
+									}
+								/>
+							)}
 						</div>
 					)}
 				</div>

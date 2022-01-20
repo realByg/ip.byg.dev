@@ -36,7 +36,7 @@ const SearchBar = ({ placeholder, onSearch }: SearchBarProps) => {
 				<input
 					className={`${
 						inputInvalid ? 'text-red-600 underline' : 'text-black'
-					} h-full text-sm focus:outline-none px-3 bg-gray-300 w-full tracking-widest rounded-l-md`}
+					} h-full text-sm focus:outline-none px-3 bg-gray-300 w-full rounded-l-md rounded-r-none`}
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 					onKeyDown={(e) => {
@@ -48,7 +48,7 @@ const SearchBar = ({ placeholder, onSearch }: SearchBarProps) => {
 				/>
 			</div>
 			<div
-				onClick={() => _onSearch()}
+				onClick={_onSearch}
 				className='cursor-pointer h-8 w-8 dark:bg-zinc-800 bg-slate-300 flex items-center justify-around rounded-r-md'>
 				<BiSearchAlt2 className='text-lg' />
 			</div>
